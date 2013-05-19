@@ -86,7 +86,7 @@ def getGlobalAvailableTemplates():
 
 def getUserAvailableTemplates():
 
-    template_path = home + "/.marksf_gen/templates"
+    template_path = home + "/.tpl4md/templates"
 
     if path.exists(template_path) :
 
