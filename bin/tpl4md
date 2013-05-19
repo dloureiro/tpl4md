@@ -1,0 +1,231 @@
+#! /usr/bin/python
+
+import Tkinter, tkFileDialog, tkSimpleDialog, tkMessageBox
+import sys
+import argparse
+import os
+import imp
+import random
+from os import mkdir, makedirs, path
+from shutil import copy
+
+## {{{ http://code.activestate.com/recipes/410646/ (r2)
+from Tkinter import *
+
+from os.path import expanduser
+home = expanduser("~")
+
+class ListBoxChoice(object):
+    def __init__(self, master=None, title=None, message=None, choices=[]):
+        self.master = master
+        self.value = None
+        self.choices = choices
+
+        self.modalPane = Toplevel(self.master)
+
+        self.modalPane.transient(self.master)
+        self.modalPane.grab_set()
+
+        self.modalPane.bind("<Return>", self._choose)
+        self.modalPane.bind("<Escape>", self._cancel)
+
+        if title:
+            self.modalPane.title(title)
+
+        if message:
+            Label(self.modalPane, text=message).pack(padx=5, pady=5)
+
+        listFrame = Frame(self.modalPane)
+        listFrame.pack(side=TOP, padx=5, pady=5)
+
+        scrollBar = Scrollbar(listFrame)
+        scrollBar.pack(side=RIGHT, fill=Y)
+        self.listBox = Listbox(listFrame, selectmode=SINGLE)
+        self.listBox.pack(side=LEFT, fill=Y)
+        scrollBar.config(command=self.listBox.yview)
+        self.listBox.config(yscrollcommand=scrollBar.set)
+        self.choices.sort()
+        for item in self.choices:
+            self.listBox.insert(END, item)
+
+        buttonFrame = Frame(self.modalPane)
+        buttonFrame.pack(side=BOTTOM)
+
+        chooseButton = Button(buttonFrame, text="Choose", command=self._choose)
+        chooseButton.pack()
+
+        cancelButton = Button(buttonFrame, text="Cancel", command=self._cancel)
+        cancelButton.pack(side=RIGHT)
+
+    def _choose(self, event=None):
+        try:
+            firstIndex = self.listBox.curselection()[0]
+            self.value = self.choices[int(firstIndex)]
+        except IndexError:
+            self.value = None
+        self.modalPane.destroy()
+
+    def _cancel(self, event=None):
+        self.modalPane.destroy()
+
+    def returnValue(self):
+        return self.value
+
+def getGlobalAvailableTemplates():
+    script_path = os.path.dirname(os.path.realpath(__file__))
+
+    template_path = script_path + "/../share/templates"
+
+    templates = os.listdir(template_path)
+
+    md_templates = {k: imp.load_source(k, os.path.join(template_path,
+                                                       k, "generator.py"))
+                    for k in templates
+                    if path.isdir(os.path.join(template_path, k))}
+    return md_templates
+
+def getUserAvailableTemplates():
+
+    template_path = home + "/.marksf_gen/templates"
+
+    if path.exists(template_path) :
+
+        templates = os.listdir(template_path)
+
+        md_templates = {k: imp.load_source(k, os.path.join(template_path,
+                                                       k, "generator.py"))
+                    for k in templates
+                    if path.isdir(os.path.join(template_path, k))}
+        return md_templates
+    else:
+        return {}
+
+
+def getAvailableTemplates():
+    global_templates = getGlobalAvailableTemplates()
+    user_templates = getUserAvailableTemplates()
+
+    return dict(global_templates.items() + user_templates.items())
+
+
+def displayTemplates():
+    templates = getAvailableTemplates();
+    print "Avaiable templates :"
+    for name, description in templates.iteritems():
+        print " - {0} : {1}".format(name, templates[name].description)
+
+
+
+def parseOptions():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-l", "--list", action="store_true", dest="listing",
+                        help="Provide the list of available templates supported")
+    parser.add_argument("-o", "--output",
+                        help="The output directory where the template directory will be generated")
+    parser.add_argument("-i", "--interface", action="store_true",
+                        help="Provide a graphical user interface to generate the code")
+    parser.add_argument("-t", "--type", dest="types", default="pdf-simple",
+                        help="The template type to use")
+    args = parser.parse_args()
+
+    if args.interface:
+        main_ui()
+    elif args.listing:
+        displayTemplates()
+    elif args.types and args.output:
+        main(args.types, args.output)
+    else :
+        parser.print_help()
+
+def main_ui():
+    root = Tkinter.Tk()
+    root.withdraw()
+
+    template_type = True
+    choices = getAvailableTemplates().keys()
+    template_type = ListBoxChoice(root, "Template selection", "Pick one of the avaiable templates", choices).returnValue()
+
+    options = {}
+    options['mustexist'] = False
+    options['title'] = 'Select the root directory'
+
+    project_name = tkSimpleDialog.askstring('Project name', 'Choose a name for your project?')
+    if project_name:
+        root_path = tkFileDialog.askdirectory(**options)
+        if root_path:
+            #tkMessageBox.showinfo(
+            #"Warning",
+            #"Project will be created in directory "+ root_path + "/" + project_name + "\n" + "With " + template_type + " template")
+            main(template_type, os.path.join(root_path, project_name))
+        else:
+            tkMessageBox.showwarning(
+            "Warning",
+            "No project root path selected. Aborting")
+            sys.exit()
+    else :
+        tkMessageBox.showwarning(
+        "Warning",
+        "No project name selected. Aborting")
+        sys.exit()
+
+def main(template_type,project_dir) :
+    #print "Template type is : " + template_type
+    #print "Project directory is : " + project_dir
+
+    # checking template type
+
+    if template_type not in getAvailableTemplates():
+        print "Wrong template type"
+        sys.exit(2)
+
+
+    # checking  proect directory
+
+    if path.isfile(project_dir) or path.isdir(project_dir):
+        print "Wrong project directory"
+        sys.exit(2)
+
+    # it's ok, let's continue
+
+    local_path = path.dirname(path.realpath(__file__))
+    in_doc_path = local_path + "/../share/doc/"
+    in_templates_path = local_path + "/../share/templates/"
+    in_common_path = local_path + "/../share/common/"
+    in_bin_path = local_path + "/../share/common/bin/"
+
+    print "Generating {0} project in {1}\n".format(template_type, project_dir)
+    print "- Creating base project elements"
+    mkdir(project_dir)
+
+    # Creating output dir and bin dir at the same time
+    out_bin_path = os.path.join(project_dir, "bin")
+    mkdir(out_bin_path)
+    print "- Copying helper scripts"
+    print "-- helper script directory created"
+    copy(os.path.join(in_bin_path, "config_parsing"),
+         os.path.join(out_bin_path, "config_parsing"))
+    print "-- Configuration parser copied"
+
+    # documentation directory
+    out_doc_path = project_dir + "/doc"
+    mkdir(out_doc_path)
+    copy(os.path.join(local_path, "../README.md"), out_doc_path)
+    print "-- README.md copied"
+    copy(os.path.join(local_path, "../README.pdf"), out_doc_path)
+    print "-- README.pdf copied"
+
+    templates = getAvailableTemplates()
+
+    template_generator = templates[template_type]
+
+    template_generator.generate(project_dir)
+
+    print "\n{0} project generated with success in {1}\n".format(template_type, project_dir)
+
+    template_generator.usage_message()
+
+if __name__ == "__main__":
+    #main()
+    parseOptions()
+    #getAvailableTemplates()
+
