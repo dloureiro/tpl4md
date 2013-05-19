@@ -168,7 +168,7 @@ The readme file in the pdf format is generated with the following command:
 
 ## TODO list
 
-Un certain nombre d'améliorations peuvent être apportées aux éléments déjà mis en place. En voici une liste non exhaustive:
+A lot of enhancements can be added to the existing project. Here is a non-exhaustive list:
 
  * Template standardisation regarding the copy of the template files
  * Factorization of the template elements
