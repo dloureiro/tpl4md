@@ -1,4 +1,4 @@
-# marksf_gen : Ecriture de document SysFera avec pandoc
+# tpl4md : template markdown pour la génération de documents
 
 ## Objet
 
