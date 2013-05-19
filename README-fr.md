@@ -150,6 +150,8 @@ avec *key* la clef dont on veut récupérer la valeur.
 
 ## Template
 
+### Description principale
+
 Un template reste assez libre dans son implémentation. Quelques règles sont néanmoins observées pour leur utilisation depuis le script de génération `tpl4md`
 
 Nous allons ici aborder les grands principes d'un template. Vous pourrez ensuite vous référer à la documentation spécifique de chacun de ces templates pour plus de détail.
@@ -165,6 +167,13 @@ Chaque template est actuellement constitué des éléments de base suivant:
  * Un fichier `generator.py` qui va s'occuper de la copie des fichiers de base d'un template vers le dossier de destination lors de la génération d'un projet basé sur un template
  
 Ensuite, chaque template contiendra un ensemble d'éléments qui peuvent lui être spécifique.
+
+### Templates globaux et spécifiques à l'utilisateur
+
+`tpl4md` va chercher les templates disponibles dans deux dossiers :
+
+ * `share/templates` au même niveau que le dossier contenant les scripts de `tpl4md` et qui contiendra les templates globaux fournis avec la distribution
+ * `$HOME/.tpl4md/tempaltes` dans le dossier utilisateur qui contiendra les templates que l'utilisateur souhaitera rendre disponible à `tpl4md` qu'il aura pu développer lui-même ou trouver sur internet.
 
 ## README.pdf
 

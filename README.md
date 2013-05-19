@@ -143,7 +143,9 @@ It is called as follows:
 
 ## Template
 
-A template is pretty free in is implementation. Some rules must still be observed for their use by `tpl4md`
+### Main description
+
+A template is pretty free in is implementation. Some rules must still be observed for their use by `tpl4md`.
 
 Here are the main principles for a well written template. You can refer to the specific documentation of each template for more details.
 
@@ -159,6 +161,14 @@ Each template is currently composed of the following elements:
  * A file called `generator.py` that will deal with the copy of the template files to the destination folder and that will be the entry point for a template
 
 And other files could then be added in each template to perform the needed operations.
+
+### Global and user specific templates
+
+Templates can be located in two places :
+
+ * in the `share/templates` folder near the bin directory where `tpl4md` is installed. This folder will hold the global templates, mainly provided with the distribution of `tpl4md`
+ * in the `$HOME/.tpl4md/templates` folder for the user specific templates. You can put templates of your own in that directory. they will be available  through `tpl4md`. It provided a way to use new templates without modifying the distribution of `tpl4md`
+ 
 
 ## README.pdf
 
