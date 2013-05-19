@@ -30,32 +30,229 @@
 
       </header>
       <section>
-        <h3>Welcome to GitHub Pages.</h3>
+        <h1>tpl4md : Markdown templates to ease the creation of Markdown documents</h1>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h2>Objet</h2>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p><code>tpl4md</code> provide markdown templates for widely used documents such as simple pdf documents, complex pdf documents, letters, invoices, orders, or even slides. The goal is to be able to focus on the content that will be written in markdown. The rest is handle by pandoc, latex etc.</p>
+
+<h2>Translation</h2>
+
+<p>This <code>README</code> file is also available <a href="README-fr.md">in french</a></p>
+
+<h1>Prerequisite</h1>
+
+<h2>Linux/Mac OSX</h2>
+
+<p>tpl4md is using different technologies to generate documents:</p>
+
+<ul>
+<li>
+<a href="http://johnmacfarlane.net/pandoc/">Pandoc</a> used to convert Markdown documents to various document formats is available on all the major platforms</li>
+<li>The <a href="http://www.latex-project.org/">LaTeX</a> document typesetting system. Don't worry, you won't have to write LaTeX code! Well perhaps a little bit … (The following packages are mandatory : <code>texlive</code>, <code>texlive-latex-recommended</code> et <code>texlive-latex-extra</code>)</li>
+<li>The <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> format for the writing of documents. Some extensions are provided by pandoc to support tables and other cool stuff and you can find the documentation on the <a href="http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown">related page</a>
+</li>
+<li>The compilation tool : <a href="http://www.gnu.org/software/make/">Make</a>
+</li>
+<li>A simple or more advanced editor (providing syntax highlightning) to write markdown (<a href="http://mouapp.com/">Mou</a> available for the Mac OSX platform is pretty good with a decent WYSIWYG support)</li>
+<li>A recent version of the Python framework (v2.7 is ok)</li>
+</ul><h2>Windows</h2>
+
+<ul>
+<li>
+<a href="http://johnmacfarlane.net/pandoc/">Pandoc</a> used to convert Markdown documents to various document formats is available on all the major platforms
+
+<ul>
+<li>The <a href="http://www.latex-project.org/">LaTeX</a> document typesetting system. Don't worry, you won't have to write LaTeX code! Well perhaps a little bit … On windows platforms my preffered one is the TeXLive (worked for me at least) or the MikTeX distribution John Mac Farlane is  (le créateur de Pandoc) sur son site.</li>
+<li>Une version récente de Python (celle de la communauté ou celle d'ActiveState)</li>
+<li>Le format <a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a> pour l'écriture du document avec les extensions fournies par Pandoc dont on peut trouver la description sur <a href="http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown">la page dédiée</a>
+</li>
+<li>Un éditeur de texte pour taper le markdown (Notepad ++ semple aller, à voir s'il existe un éditeur WYSIWIG sympa)</li>
+<li>Les logiciels make/sed et l'ensemble des coreutils de gnu portés sur Windows</li>
+<li>Les polices d'écriture présentes dans le svn (Marketing/03-Print/fonts) ajoutées au système d'exploitation </li>
+</ul>
+</li>
+</ul><h3>Prerequisites installation walkthrough for Windows Operating Systems</h3>
+
+<ul>
+<li>Pandoc's installation : you just have to go on the download page and get the <strong>msi</strong> installer : <a href="https://code.google.com/p/pandoc/downloads/list">https://code.google.com/p/pandoc/downloads/list</a>
+</li>
+<li>Get the mandatory unix ports on Windows and install them in a easy to remember directory (e.g. <code>C:\gnuwin32</code>) : 
+
+<ul>
+<li>Make : <a href="http://gnuwin32.sourceforge.net/downlinks/make.php">http://gnuwin32.sourceforge.net/downlinks/make.php</a>
+</li>
+<li>Sed : <a href="http://sourceforge.net/projects/gnuwin32/files//sed/4.2.1/sed-4.2.1-setup.exe/download">http://sourceforge.net/projects/gnuwin32/files//sed/4.2.1/sed-4.2.1-setup.exe/download</a>
+</li>
+<li>CoreUtils : <a href="http://gnuwin32.sourceforge.net/downlinks/coreutils.php">http://gnuwin32.sourceforge.net/downlinks/coreutils.php</a>
+</li>
+</ul>
+</li>
+<li>Install a flavor of the Python framework (2.7.* or higher) : this one <a href="http://python.org/ftp/python/2.7.5/python-2.7.5.msi">http://python.org/ftp/python/2.7.5/python-2.7.5.msi</a> or that one <a href="http://www.activestate.com/activepython/downloads/thank-you?dl=http://downloads.activestate.com/ActivePython/releases/2.7.2.5/ActivePython-2.7.2.5-win32-x86.msi">http://www.activestate.com/activepython/downloads/thank-you?dl=http://downloads.activestate.com/ActivePython/releases/2.7.2.5/ActivePython-2.7.2.5-win32-x86.msi</a>
+</li>
+<li>Install the TexLive LaTeX distribution <a href="http://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip">http://mirror.ctan.org/systems/texlive/tlnet/install-tl.zip</a>, uncompress it and then execute <code>install-tl-advanced.bat</code> that will allow you to install all the LaTeX packages available. Remember the path where the TexLive is installed (something like <code>C:\texlive2012</code> for example).</li>
+</ul><p>Once you're done just add the path to the executable binaries in the <code>PATH</code> (global) and <code>Path</code> (user specific) variables.</p>
+
+<h1>How to install</h1>
+
+<h2>From the github repository</h2>
+
+<p>To install <code>tpl4md</code> from the github repository :</p>
+
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>output_path
+<span class="nv">$ </span>git clone git@github.com:dloureiro/tpl4md.git .
+</pre></div>
+
+<p>Then you just have to add the <code>bin</code> directory to your <code>PATH</code> variable.</p>
+
+<h2>Using pip (not available)</h2>
+
+<p>To install <code>tpl4md</code> using the pip installer :</p>
+
+<div class="highlight"><pre>pip install tpl4md
+</pre></div>
+
+<p>It will automatically be added to your <code>PATH</code> variable.</p>
+
+<h1>Content of the project</h1>
+
+<h2>Repository Structure</h2>
+
+<pre><code>root
+|- bin
+|  |- marksf_gen
+|  |- marksf_gen.bat
+|- share
+|  |- common
+|  |  |- bin
+|  |  |  |- config_parsing
+|  |  |  |- generate_files
+|  |- doc
+|  |  |- README.pdf
+|  |  |- README-fr.pdf
+|  |- templates              // The list of available templates. 
+|     |- epub                // Take a look at their README.md for more info
+|     |- pdf-cplx
+|     |- pdf-lettre
+|     |- pdf-simple
+|     |- invoice-fr
+|     |- order-fr
+|     |- slides-reveal
+|- README.md
+|- README-fr.md
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>Content description</h2>
 
-<h3>Designer Templates</h3>
+<p><strong>File</strong>                           <strong>Description</strong></p>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<hr><p>bin/tpl4md                        Main script generating the base project depending on the chosen template
+  bin/tpl4md.bat                    Corresponding batch script for windows
+  share/doc/README(-fr).pdf         This readme file (and the french translation) in pdf version
+  share/common/bin/config_parser    Script used to retrieve some variables from the configuration script
+  share/templates                   The directory containing template generation files
+  share/templates/epub              Template folder for the ebooks
+  share/templates/pdf-simple        Template folder for simple pdf documents
+  share/templates/pdf-cplx          Template folder for complex pdf documents
+  share/templates/pdf-lettre        Template folder for letters
+  share/templates/invoice-fr        Template folder for invoices (in french for the moment)
+  share/templates/order-fr          Template folder for orders (in french for the moment)
+  share/templates/slides-reveal     Template folder for slides powered by <a href="https://github.com/hakimel/reveal.js/">reveal.js</a></p>
 
-<h3>Rather Drive Stick?</h3>
+<h2><code>tpl4md</code></h2>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>This script is the principal elements of the project: it allows the generation of empty projects for documents following existing templates. Here is the script signature:</p>
 
-<h3>Authors and Contributors</h3>
+<pre><code>tpl4md [-h] [-l] [-o OUTPUT] [-i] [-t TYPE]
+</code></pre>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<ul>
+<li>
+<strong>-l</strong> or <strong>--list</strong> : Option used to list of the avaiable templates (provided in the default distribution and the one available in your local home directory</li>
+<li>
+<strong>-t</strong> or <strong>--type</strong> : Option used to select the template type to use (one of those provided by the <strong>-l</strong> option)</li>
+<li>
+<strong>-o</strong> or <strong>--output</strong> : Option used to define the name output directory (it will be created and must not exist before the execution of <code>tpl4md</code>). It will be filled with the elements of the selected template</li>
+<li>
+<strong>-i</strong> or <strong>--interface</strong> : This option provide a graphical usr interface to <code>tpl4md</code> that will allow you to define :
 
-<h3>Support or Contact</h3>
+<ul>
+<li>the type of template to use</li>
+<li>the name of the directory to create</li>
+<li>the path where this directory will be created</li>
+</ul>
+</li>
+</ul><h2>tpl4md.bat</h2>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>This file is a shortcut for Windows users for the folowing command : <code>tpl4md -i</code></p>
+
+<h2>config_parser</h2>
+
+<p>This script is used to retrieve variables from the configuration file. It is mainly use by the <code>Makefile</code> to get some useful information such as the name of the source file or the name of the destination file.</p>
+
+<p>It is called as follows:</p>
+
+<pre><code>python ./bin/config_parser key
+</code></pre>
+
+<p><em>key</em> being the key you want the value for.</p>
+
+<p>** Warning: there is no reason to use that script outsite of the <code>Makefile</code>. Its sole usage is the generation of a temporary file **</p>
+
+<h2>Template</h2>
+
+<p>A template is pretty free in is implementation. Some rules must still be observed for their use by <code>tpl4md</code></p>
+
+<p>Here are the main principles for a well written template. You can refer to the specific documentation of each template for more details.</p>
+
+<p>Each template is currently composed of the following elements:</p>
+
+<ul>
+<li>
+<p>A <code>Makefile</code> with two targets:</p>
+
+<ul>
+<li>the main one used for the compilation</li>
+<li>
+<code>clean</code> used for the clean up</li>
+</ul>
+<p>The main target does not currently follows any pattern regarding its name (the standardisation is in the <strong>TODO</strong> list) and is provided as a batch file for the Windows users.</p>
+</li>
+<li><p>A configuration file in the <em>JSON</em> format named <code>configuration.json</code> containing the information used during the generation by each template (those info will change for each template, even if some of them are mandatory for each template)</p></li>
+<li><p>A file called <code>generator.py</code> that will deal with the copy of the template files to the destination folder and that will be the entry point for a template</p></li>
+</ul><p>And other files could then be added in each template to perform the needed operations.</p>
+
+<h2>README.pdf</h2>
+
+<p>The readme file in the pdf format is generated with the following command:</p>
+
+<pre><code>pandoc -f markdown-raw_tex README.md -o share/doc/README.pdf
+</code></pre>
+
+<h2>TODO list</h2>
+
+<p>A lot of enhancements can be added to the existing project. Here is a non-exhaustive list:</p>
+
+<ul>
+<li>Template standardisation regarding the copy of the template files</li>
+<li>Factorization of the template elements</li>
+<li>Génération of a HTML document</li>
+<li>
+<strong>DONE</strong> Addition of Reveal.js presentation in a template</li>
+<li>Makefile targets standardization</li>
+<li>
+<strong>DONE</strong>: <code>pdflatex</code> -&gt; <code>XeTeX</code> for a better support of UTF-8 and custom fonts</li>
+<li>Better simple and complex pdf templates (regarding the watermark support)</li>
+<li>User's guide for the creation of templates</li>
+<li>
+<strong>DONE</strong>: Separation of the file adapting the templates depending on the <code>configuration.json</code>
+</li>
+<li>Addition of a CSS stylesheet and a cover image for the epub</li>
+<li>
+<strong>DONE</strong>: Definition of a non-technic document template</li>
+<li>
+<strong>DONE</strong>: Preprocessing that will take a input file in the <em>JSON</em> format that would allow the adaptation of the templates</li>
+</ul>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
