@@ -95,21 +95,19 @@ It will automatically be added to your `PATH` variable.
 
 ## Content description
 
- **File**                           **Description**
----------------------------------  ---------------------------------------------------------------------------
-  bin/tpl4md                        Main script generating the base project depending on the chosen template
-  bin/tpl4md.bat                    Corresponding batch script for windows
-  share/doc/README(-fr).pdf         This readme file (and the french translation) in pdf version
-  share/common/bin/config_parser    Script used to retrieve some variables from the configuration script
-  share/templates                   The directory containing template generation files
-  share/templates/epub              Template folder for the ebooks
-  share/templates/pdf-simple        Template folder for simple pdf documents
-  share/templates/pdf-cplx          Template folder for complex pdf documents
-  share/templates/pdf-lettre        Template folder for letters
-  share/templates/invoice-fr        Template folder for invoices (in french for the moment)
-  share/templates/order-fr          Template folder for orders (in french for the moment)
-  share/templates/slides-reveal     Template folder for slides powered by [reveal.js](https://github.com/hakimel/reveal.js/)
-  
+ * **bin/tpl4md**: Main script generating the base project depending on the chosen template
+ * **bin/tpl4md.bat**: Corresponding batch script for windows
+ * **README(-fr).md**: This readme file
+ * **share/doc/README(-fr).pdf** : This readme file (and the french translation) in pdf version
+ * **share/common/bin/config_parser**: Script used to retrieve some variables from the configuration script
+ * **share/templates**: The directory containing template generation files
+ * **share/templates/epub**: Template folder for the ebooks
+ * **share/templates/pdf-simple**: Template folder for simple pdf documents
+ * **share/templates/pdf-cplx**: Template folder for complex pdf documents
+ * **share/templates/pdf-lettre**: Template folder for letters
+ * **share/templates/invoice-fr**: Template folder for invoices (in french for the moment)
+ * **share/templates/order-fr**: Template folder for orders (in french for the moment)
+ * **share/templates/slides-reveal**: Template folder for slides powered by [reveal.js](https://github.com/hakimel/reveal.js/)
 
 ## `tpl4md`
 

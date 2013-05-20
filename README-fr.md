@@ -100,29 +100,28 @@ pip install tpl4md
 
 ## Description de ce contenu
 
- **Fichier**                        **Description**
----------------------------------  -------------------------------------------------------------------------
-  bin/tpl4md                        Générateur boostrappant un projet en fonction du template demandé
-  bin/tpl4md.bat                    Fichier batch pour le lancement du générateur pour windows
-  README(-fr).md                    Ce fichier de README et sa traduction en anglais
-  share/doc/README(-fr).pd)         Ce fichier de README et sa traduction en anglais au format PDF
-  share/common/bin/config_parser    Script permettant la récupération de certaines variables du fichier de configuration
-  share/templates                   Le dossier contenant les templates disponibles
-  share/templates/epub              Dossier du template pour les ebooks en ePub
-  share/templates/pdf-simple        Dossier du template pour les documents PDF simples
-  share/templates/pdf-cplx          Dossier du template pour les documents PDF complexes
-  share/templates/pdf-lettre        Dossier du template pour les lettres et courriers divers
-  share/templates/invoice-fr        Dossier du template pour les factures
-  share/templates/order-fr          Dossier du template pour les bons de commande
-  share/templates/slides-reveal     Dossier du template pour des slides propulsées par [reveal.js](https://github.com/hakimel/reveal.js/)
+
+ * **bin/tpl4md** : Générateur boostrappant un projet en fonction du template demandé
+ * **bin/tpl4md.bat** : Fichier batch pour le lancement du générateur pour windows
+ * **README(-fr).md** : Ce fichier de README et sa traduction en anglais
+ * **share/doc/README(-fr).pdf** : Ce fichier de README et sa traduction en anglais au format PDF
+ * **share/common/bin/config_parser** : Script permettant la récupération de certaines variables du fichier de configuration
+ * **share/templates** : Le dossier contenant les templates disponibles
+ * **share/templates/epub** : Dossier du template pour les ebooks en ePub
+ * **share/templates/pdf-simple** : Dossier du template pour les documents PDF simples
+ * **share/templates/pdf-cplx** : Dossier du template pour les documents PDF complexes
+ * **share/templates/pdf-lettre** : Dossier du template pour les lettres et courriers divers
+ * **share/templates/invoice-fr** : Dossier du template pour les factures
+ * **share/templates/order-fr** : Dossier du template pour les bons de commande
+ * **share/templates/slides-reveal** : Dossier du template pour des slides propulsées par [reveal.js](https://github.com/hakimel/reveal.js/)
 
 Nous allons aborder les fichiers les plus importants et nous nous attarderons ensuite sur les templates fournis.
 
-## marksf_gen
+## `tpl4md`
 
 Ce script est l'élément principal du projet car il permet la génération d'un projet vierge pour la mise en place de document en suivant l'un des templates fournis. Ce script possèd ela signature suivante :
 
-    marksf_gen [-h] [-l] [-o OUTPUT] [-i] [-t TYPE]
+    tpl4md [-h] [-l] [-o OUTPUT] [-i] [-t TYPE]
 
  * **-l** ou **--list** : liste les templates disponibles (pour l'instant epub/pdf-simple/pdf-cplx/pdf-lettre)
  * **-t** ou **--type** : définit le type de template à utiliser (l'un de ceux fournit par l'option **-l**)
@@ -132,9 +131,9 @@ Ce script est l'élément principal du projet car il permet la génération d'un
    * le nom du dossier à créer
    * le répertoire dans lequel ce dossier va être créé
 
-## marksf_gen.bat
+## tpl4md.bat
 
-Ce fichier est un fichier batch pour windows effectuant l'appel suivant : `marksf_gen -i`
+Ce fichier est un fichier batch pour windows effectuant l'appel suivant : `tpl4md -i`
 
 ## config_parser
 
