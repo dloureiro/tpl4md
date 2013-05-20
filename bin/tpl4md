@@ -211,7 +211,7 @@ def main(template_type,project_dir) :
     mkdir(out_doc_path)
     copy(os.path.join(local_path, "../README.md"), out_doc_path)
     print "-- README.md copied"
-    copy(os.path.join(local_path, "../README.pdf"), out_doc_path)
+    copy(os.path.join(local_path, "../share/doc/README.pdf"), out_doc_path)
     print "-- README.pdf copied"
 
     templates = getAvailableTemplates()
