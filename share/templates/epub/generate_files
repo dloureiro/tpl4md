@@ -1,0 +1,43 @@
+import re
+import sys
+import json
+import codecs
+from os import path, access, R_OK  # W_OK for write permission.
+
+if len(sys.argv) > 1 :
+    debug = True;
+else :
+    debug = False;
+
+json_data=codecs.open('./configuration.json', "r", "utf-8")
+data = json.load(json_data)
+json_data.close()
+
+file_handle = codecs.open("./common/title.txt", 'r', "utf-8")
+file_string = file_handle.read()
+file_handle.close()
+# Getting title
+if "title" in data :
+        title = data["title"]
+else :
+    print "Setting default value for title : My title"
+    title = "My title"
+
+if debug : print "Setting title to " + title
+file_string = (re.sub(u'!title!', title, file_string))
+
+# Getting author
+if "author" in data :
+    author = data["author"]
+else :
+    print "Setting default value for author : My author"
+    author = "My author"
+
+if debug : print "Setting author to " + author
+file_string = (re.sub(u'!author!', author, file_string))
+
+# Write contents to file.
+# Using mode 'w' truncates the file.
+file_handle = codecs.open("./title-gen.txt", 'w', "utf-8")
+file_handle.write(file_string)
+file_handle.close()
