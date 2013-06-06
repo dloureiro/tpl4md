@@ -1,0 +1,2 @@
+make slides-reveal
+pause

@@ -1,0 +1,183 @@
+import re
+import sys
+import json
+import codecs
+from os import path, access, R_OK  # W_OK for write permission.
+import datetime
+import string
+import random
+
+def id_generator(size=8, chars=string.digits):
+    return ''.join(random.choice(chars) for x in range(size))
+
+if len(sys.argv) > 1 :
+    debug = True;
+else :
+    debug = False;
+
+now = datetime.datetime.now()
+
+json_data=codecs.open('./configuration.json', "r", "utf-8")
+data = json.load(json_data)
+json_data.close()
+
+template_file_base = "./common/index.html";
+template_file_generated = "./index.html";
+
+if debug : print "Base Template file to use : " + template_file_base
+
+if path.isfile(template_file_base) and access(template_file_base, R_OK):
+    #print "File exists and is readable"
+    # Read contents from file as a single string
+    file_handle = codecs.open(template_file_base, 'r', "utf-8")
+    file_string = file_handle.read()
+    file_handle.close()
+
+    # Getting title
+    if "title" in data :
+        title = data["title"]
+    else :
+        print "Setting default value for title : My title"
+        title = "My title"
+
+    if debug : print "Setting title to " + title
+    file_string = (re.sub(u'!title!', title, file_string))
+
+    # Getting sub-title
+    if "subtitle" in data :
+        subtitle = data["subtitle"]
+    else :
+        print "Setting default value for subtitle : ''"
+        subtitle = ""
+
+    if debug : print "Setting subtitle to " + subtitle
+    file_string = (re.sub(u'!subtitle!', subtitle, file_string))
+
+    # Getting author
+    if "author" in data :
+        author = data["author"]
+    else :
+        print "Setting default value for author : My author"
+        author = "My author"
+
+    if debug : print "Setting author to " + author
+    file_string = (re.sub(u'!author!', author, file_string))
+
+    # Getting transition
+    if "transition" in data :
+        transition = data["transition"]
+    else :
+        print "Setting default value for transition : cube"
+        transition = "cube"
+
+    if debug : print "Setting transition to " + transition
+    file_string = (re.sub(u'!transition!', transition, file_string))
+
+    if "loop" in data :
+        loop = data["loop"]
+    else :
+        print "Setting default value for loop : false"
+        loop = False
+
+    if debug : print "Setting loop to " + str(loop)
+    file_string = (re.sub(u'!loop!', "loop:"+str(loop).lower()+",", file_string))
+
+    if "autoSlide" in data :
+        autoSlide = data["autoSlide"]
+    else :
+        print "Setting default value for autoSlide (no autoSlide)"
+        autoSlide = 0
+
+    if debug and autoSlide : print "Setting autoSlide to " + str(autoSlide)
+    file_string = (re.sub(u'!autoSlide!', "autoSlide:"+str(autoSlide)+",", file_string))
+
+    # Getting website
+    if "website" in data :
+        website = data["website"]
+    else :
+        print "Setting default value for website : http://www.sysfera.fr"
+        website = "http://www.sysfera.fr"
+
+    if debug : print "Setting website to " + website
+    file_string = (re.sub(u'!website!', website, file_string))
+
+    # Getting date
+    if "date" in data :
+        date = data["date"]
+    else :
+        date = now.strftime("%Y/%m/%d")
+        print "Setting default value for date : " + date
+
+    if debug : print "Setting date to " + date
+    file_string = (re.sub(u'!date!', date, file_string))
+
+    # Getting event
+    if "event" in data :
+        event = data["event"]
+    else :
+        event = ""
+        print "Setting default value for event : "
+
+    if debug : print "Setting event to " + event
+    file_string = (re.sub(u'!event!', event, file_string))
+
+    # Getting twitter
+    if "twitter" in data :
+        twitter = u"/ <a href='http://twitter.com/"+ data["twitter"] +"'>@"+ data["twitter"] +"</a>"
+
+    else :
+        print "Setting default value for twitter : SysFera"
+        twitter = u"/ <a href='http://twitter.com/SysFera'>@SysFera</a>"
+
+    if debug : print "Setting twitter to " + twitter
+    file_string = (re.sub(u'!twitter!', twitter, file_string))
+
+    # if "table_of_contents" in data :
+    #     table_of_contents = data["table_of_contents"]
+    # else :
+    #     table_of_contents = False
+
+    # if debug :
+    #     if table_of_contents :
+    #         print "Adding table of contents"
+    #     else :
+    #         print "No table of contents added"
+
+    # Getting source files and table of contents
+    if "source_files" in data :
+
+        source_files = data["source_files"]
+
+        if debug : print "Setting source files to " + str(source_files)
+        content_line = ""
+        # table_of_contents_line = r"<section>\n<h2>Plan</h2>\n<ul>"
+        if len(source_files) > 0 :
+            for source_file in source_files :
+
+                content_line += u'<section'
+                # if table_of_contents :
+                #     section_id = "slides-" + id_generator()
+                #     table_of_contents_line += r"<li><a href='#/"+ section_id +"'>"+source_file["title"]+r"</a></li>\n"
+                #     content_line += " id='"+section_id + "'"
+                content_line += ' data-markdown="'+source_file["file"]+r'" data-separator="^!SECTION$" data-vertical="^!SLIDE$"></section>\n'
+            # table_of_contents_line += "</ul>\n</section>"
+            file_string = (re.sub(u'!content!', content_line, file_string) )
+            # if table_of_contents :
+            #     file_string = (re.sub(u'!toc!',table_of_contents_line, file_string))
+            # else :
+            #    file_string = (re.sub(u'!toc!',"", file_string))
+        else :
+            print r"No source file found!"
+            file_string = (re.sub(u'!content!', "", file_string) )
+    else :
+        print r"No source file found!"
+        file_string = (re.sub(u'!content!', "", file_string) )
+
+    # Write contents to file.
+    # Using mode 'w' truncates the file.
+    file_handle = codecs.open(template_file_generated, 'w', "utf-8")
+    file_handle.write(file_string)
+    file_handle.close()
+
+else:
+    print "Either file is missing or is not readable"

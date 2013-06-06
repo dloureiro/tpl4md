@@ -1,0 +1,24 @@
+{
+	"title" : "Document entre SysFera et un client",
+    "subtitle":"Trop bien",
+	"author" : "John Doe",
+    "website":"http://www.sysfera.com",
+    "e-mail" : "john.doe@sysfera.com",
+    "twitter" : "hakimel",
+	"event":"Mix-IT",
+    "date":"2013-04-27",
+    "transition":"cube",
+    "loop":true,
+    "autoSlide":7000,
+    "table_of_contents":true,
+    "source_files":[
+        {
+            "file":"src/first_part.md",
+            "title":"First part"
+        },
+        {
+            "file":"src/second_part.md",
+            "title":"Second part"
+        }
+    ]
+}
