@@ -1,0 +1,337 @@
+%%
+%% SysFera LaTeX style
+%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tplformd-simple}[2011/09/30 Simple tpl4md Style]
+
+\RequirePackage{graphicx}
+\RequirePackage{eso-pic}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
+\RequirePackage{xcolor}
+\RequirePackage{ifthen}
+\RequirePackage{amsmath}
+\RequirePackage{ulem}
+\RequirePackage{xspace}
+\RequirePackage{multirow}
+\RequirePackage{subfig}
+\RequirePackage{tabularx}
+\RequirePackage{hyperref}
+\RequirePackage{footmisc} % Before hyperlink to have consistent links to footnotes
+
+
+% The defined options
+\DeclareOption{final}{\setcounter{isFinal}{1}}
+
+% If defined, process the options
+\ProcessOptions\relax
+
+
+% ##############################################################################
+% ### SYSFERA commands
+% ##############################################################################
+
+\newlength{\@logoWidth}
+
+% The entire pages background
+
+% ##############################################################################
+% ### DocBook and local commands
+% ##############################################################################
+
+% Default DocBook Parameters
+\newcommand{\DBKreleaseinfo}{Work in progress}
+\newcommand{\TPLreleaseinfo}[1]{\renewcommand{\DBKreleaseinfo}{#1}}
+%\newcommand{\DBKreference}{}
+\newcommand{\DBKtitle}{Main Title}
+%\let\DBKsubtitle\relax
+\newcommand{\DBKdate}{\today}
+\newcommand{\DBKsite}{}
+\newcommand{\DBKedition}{}
+\newcommand{\DBKpubdate}{}
+%\let\DBKlegalblock\relax
+\newcommand{\DBKlegaltitle}{}
+%\let\DBKcopyright\relax
+
+% Local commands
+\newcommand{\DBKtoclof}{true}
+\newcommand{\DBKauthor}{}
+
+% Adaptation...
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\setlength\parskip{\medskipamount}
+\setlength\parindent{0pt}
+
+
+% We want paragraph + subparagraph headers like the others
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+
+% To have title rendering changed
+\usepackage[sf,bf]{titlesec}
+
+
+% Display ``DRAFT'' as a water mark:
+\usepackage{ifpdf}
+\ifpdf
+\usepackage{pdfpages}
+\def\showwatermark#1{%
+  \AddToShipoutPicture{
+  \AtTextCenter{%
+  \makebox(0,0)[c]{\resizebox{\textwidth}{!}{%
+  \rotatebox{45}{\textsf{\textbf{\color[gray]{0.8}#1}}}}}%
+  }}
+}
+\else
+\def\showwatermark#1{}%
+\fi
+
+% ##############################################################################
+% ### Page Parameters
+% ##############################################################################
+\setlength{\paperwidth}{21cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\hoffset}{-1in}
+\setlength{\voffset}{-1in}
+\setlength{\oddsidemargin}{2cm}
+\setlength{\marginparsep}{0cm}
+\setlength{\marginparwidth}{0cm}
+\setlength{\textwidth}{17cm}
+\setlength{\topmargin}{0.5cm}
+\setlength{\headsep}{2cm}
+
+\setlength{\textheight}{24cm}
+\setlength{\footskip}{1.5cm}
+
+
+% ##############################################################################
+% ### Used Packages
+% ##############################################################################
+\makeatletter
+
+\usepackage{fancyhdr}
+
+% To have fancy <programlisting>
+\usepackage{fancyvrb}
+
+% ##############################################################################
+% ### Some DocBook floats and environments
+% ##############################################################################
+
+%% Inclusion of float package after hyperref to have its definitions!
+\usepackage{float}
+
+\@ifundefined{chapter}{
+
+\floatstyle{ruled}
+\newfloat{example}{htb}{loe}[section]
+\floatname{example}{\examplename}
+
+% Redefinition of tableofcontent, to have it in separate pages
+\let\stdtoc=\tableofcontents
+\def\tableofcontents{ \newpage \stdtoc{} \newpage}
+}{
+
+\floatstyle{ruled}
+\newfloat{example}{htb}{loe}[chapter]
+\floatname{example}{\examplename}
+
+}
+
+% Sidebar is a boxed minipage that can contain verbatim
+\newenvironment{sidebar}[1][0.95\textwidth]{
+  \hspace{0mm}\newline%
+  \noindent\begin{Sbox}\begin{minipage}{#1}%
+  \setlength\parskip{\medskipamount}%
+}{
+  \end{minipage}\end{Sbox}\shadowbox{\TheSbox}%
+}
+% ##############################################################################
+% ### tpl4md
+% ##############################################################################
+
+\setlength{\@logoWidth}{\paperwidth / 3}
+
+
+% ##############################################################################
+% ### Counter commands
+% ##############################################################################
+\newcommand{\thecounter}[1]{\arabic{#1}\xspace}
+\newcommand{\stepshow}[1]{\stepcounter{#1}\thecounter{#1}}
+
+% ##############################################################################
+% ### Title and Bookinfo display
+% ##############################################################################
+
+% Redefine how to print the cover page and book infos
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1pt\hfill \kern \z@}
+
+\def\maketitle{
+  \vskip 1cm
+  \begin{center}
+    \normalfont\huge \@title \par
+  \end{center}
+  \vskip 1cm
+\thickhrulefill
+}
+
+% ##############################################################################
+% ### Commands and environments
+% ##############################################################################
+\newcommand{\draft}{\special{!userdict begin /bop-hook{gsave 200 30 translate %
+         65 rotate /Times-Roman findfont 216 scalefont setfont %
+         0 0 moveto 0.8 setgray (DRAFT) show grestore}def end}}
+
+\usepackage{refcount}
+\usepackage{lastpage}
+
+% Changebar to have bars in the margin
+\usepackage[innerbars,traceon,color]{changebar}
+\cbcolor{red} % changebars are red
+
+% Reference of this document
+\newcommand{\TPLthisdocument}{Vxxx.yyy.zzz}
+\newcommand{\TPLdocumentreference}[1]{\renewcommand{\TPLthisdocument}{#1}}
+\newcommand{\TPLthisclient}{}
+\newcommand{\TPLclient}[1]{\renewcommand{\TPLthisclient}{#1}}
+\newcommand{\toreplace}[1]{\text{\color{red}#1}}
+
+% ##############################################################################
+% ### Macros for post-its
+% ##############################################################################
+\newcounter{isFinal}
+\setcounter{isFinal}{0}
+
+%%%
+\newwrite\poswrite
+\newread\posread
+\newdimen\drx
+\newcount\dwcnt
+\newif\iffilefound
+\def\dpoint#1#2{%
+  \drx=#1
+  \pdfsavepos
+  \edef\wr ##1{\write \poswrite {%
+    \string\expandafter\def
+    \string\csname\space dr##1\the\dwcnt\string\endcsname
+    {\noexpand\the\noexpand\csname pdflast##1pos\endcsname sp}}}%
+  \wr x%
+  \expandafter\ifx\csname drx\the\dwcnt\endcsname\relax\else
+    \advance \drx by -\csname drx\the\dwcnt\endcsname
+  \fi
+  \smash{\rlap{\kern\drx\hbox{#2}}}%
+  \advance\dwcnt by 1
+}
+
+\dwcnt=0
+\openin\posread=\jobname.pos
+\ifeof\posread \filefoundfalse\else\filefoundtrue\fi
+\closein\posread
+\iffilefound\input\jobname.pos\fi
+\immediate\openout\poswrite\jobname.pos
+%%%
+
+\definecolor{orange}{rgb}{0.8,0.8,0.6}
+
+\newlength{\@postitWidth}
+\newlength{\@todoPostitWidth}
+\newlength{\@marginPostitWidth}
+\newlength{\@warningWidth}
+
+\setlength{\@postitWidth}{5cm}
+\setlength{\@todoPostitWidth}{\columnwidth / 3 * 2}
+\setlength{\@marginPostitWidth}{1.2cm} %\marginparwidth
+\setlength{\@warningWidth}{1.2cm} %\marginparwidth
+
+\ifthenelse{\equal{\arabic{isFinal}}{1}}{
+  \newcommand{\postit}[1]{}
+
+  \newcommand{\todoPostit}[2]{}
+
+  \newcommand{\marginPostit}[1]{}
+
+  \newcommand{\warningPostit}[2]{#1}
+}{
+
+  \newcommand{\postit}[1]{%
+    \noindent
+    \fcolorbox{red}{yellow}{%
+      \begin{minipage}{\@postitWidth}
+        #1
+      \end{minipage}
+    }
+  }
+
+  \newcommand{\todoPostit}[2]{%
+    \noindent
+    \centerline{%
+      \fcolorbox{red}{yellow}{%
+        \begin{minipage}{\@todoPostitWidth}
+          \centerline{{\bf TODO:~}#1\\[2mm]}
+          #2
+        \end{minipage}
+      }
+    }
+  }
+
+  \newcommand{\marginPostit}[1]{%
+    \dpoint{1mm}{\colorbox{yellow}{%
+        \begin{minipage}{\@marginPostitWidth}
+          #1
+        \end{minipage}
+      }
+    }
+  }
+
+  \newcommand{\warningPostit}[2]{
+    % \colorbox{red}{\color{white}#1}
+    {\color{red}\uline{#1}}
+    \dpoint{1mm}{%
+      \fbox{
+        \begin{minipage}{\@warningWidth}
+          \centerline{\bf\Huge\color{red}$\triangle$\hspace*{-4.5mm}\Large
+            $\overset{!}{}$}
+          #2
+        \end{minipage}
+      }
+    }
+  }
+}
+
+% add a footnote to href                                                                                                                                             \
+\newcommand\TPLhref[2]{%
+  \href{#1}{#2}%
+  \footnote{\url{#1}}%
+}
+
+% ##############################################################################
+% ### Headers & footers
+% ##############################################################################
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\renewcommand{\footrulewidth}{0,5pt}
+
+\newcommand{\TPLsetheadlogo}[2]{
+  \fancyhead[R]{\includegraphics[width=#1\textwidth]{#2}}
+  \setlength{\textheight}{\textheight -
+    \heightof{\includegraphics[width=#1\textwidth]{#2}}
+  * \real{0.7}}
+  \setlength{\headsep}{\headsep +
+    \heightof{\includegraphics[width=#1\textwidth]{#2}}
+  * \real{0.7}}
+}
+
+\makeatother
+

@@ -1,0 +1,24 @@
+{
+    "source_file_name":"document.md",
+    "destination_file_name":"example",
+    "client":"Client",
+    "title" : "Document entre SysFera et un client",
+    "author" : "John Doe",
+    "project_name" : "Projet 999",
+    "release_info":"Réalisé héhé",
+    "water_mark":"DRAFT",
+    "lang":"french",
+    "author_company" : "Example inc.",
+    "footer":{
+        "left":[
+        "A marvelous company",
+        "We are a rock-solid team",
+        "located at the edge of the univers"
+        ],
+        "right":[
+        "Web : \\url{www.example.com}",
+        "e-mail : \\url{contact@example.com}",
+        "Tel : 01 23 45 67 89"
+        ]
+    }
+}

@@ -1,0 +1,89 @@
+\documentclass{article}
+
+\IfFileExists{ifxetex.sty}{%
+  \usepackage{ifxetex}%
+}{%
+  \newif\ifxetex
+  \xetexfalse
+}
+  \ifxetex
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\fi
+\usepackage{fancybox}
+\usepackage{makeidx}
+\usepackage{cmap}
+\usepackage{url}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{common/tplformd-simple}
+\usepackage{listings}
+\usepackage{ctable}
+%\listfiles
+%%%%
+%% TODO:
+%%  - ajouter une macro pour mettre l'objet du document
+%%  - faire les footers avec l'adresse et tels de SysFera
+%%  - enlever un max de paquets docbook
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use the following macros to configure your document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% Change language: fr/en
+%%  - for French: use french in babel, and fr in \setupsysferalocale
+%%  - for English: use english in babel, and en in \setupsysferalocale
+
+\usepackage[!lang-long!]{babel}
+!french-addon!
+\usepackage[shortlabels]{common/enumitem}
+
+%%%% OPTION
+%% Title and author of the document
+\title{!title!}
+\author{!author!}
+
+%%%% OPTION
+\TPLdocumentreference{!TPLdocumentreference!}
+\TPLclient{!client!}
+
+
+%%%% OPTION
+%% Release information.
+\TPLreleaseinfo{!release_info!}
+
+%%%% OPTION
+%% Draft watermark. You can also show a grey watermark on all pages of
+%% your document using the following command.
+\showwatermark{!water_mark!}
+
+\fancyhead[LE,RO]{\textbf{\thepage}}
+\fancyhead[LO,RE]{\textsl{\DBKtitle}}
+\fancyhead[CO,CE]{\textbf{\DBKreleaseinfo}}
+
+\fancyfoot[CO, CE]{\TPLthisdocument}
+\fancyfoot[LO] {\footnotesize{\bf{!author_company!}}\\\footnotesize{!footer_left!}}
+\fancyfoot[RO] {\footnotesize{\copyright !author_company!}\\\footnotesize{!footer_right!}}
+
+
+\begin{document}
+
+\maketitle % do not disable, otherwise you won't have any title
+%%%% OPTION
+
+  % Book contents
+
+  $body$
+
+\end{document}

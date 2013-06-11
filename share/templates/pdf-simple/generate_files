@@ -1,0 +1,165 @@
+import re
+import sys
+import json
+import codecs
+from os import path, access, R_OK  # W_OK for write permission.
+
+if len(sys.argv) > 1 :
+    debug = True;
+else :
+    debug = False;
+
+json_data=codecs.open('./configuration.json', "r", "utf-8")
+data = json.load(json_data)
+json_data.close()
+
+template_file_base = "./common/pdf-template-simple.tex";
+template_file_generated = "./pdf-template-gen.tex";
+
+if debug : print "Base Template file to use : " + template_file_base
+
+if path.isfile(template_file_base) and access(template_file_base, R_OK):
+    #print "File exists and is readable"
+    # Read contents from file as a single string
+    file_handle = codecs.open(template_file_base, 'r', "utf-8")
+    file_string = file_handle.read()
+    file_handle.close()
+
+    # Getting title
+    if "title" in data :
+        title = data["title"]
+    else :
+        print "Setting default value for title : My title"
+        title = "My title"
+
+    if debug : print "Setting title to " + title
+    file_string = (re.sub(u'!title!', title, file_string))
+
+    # Getting author
+    if "author" in data :
+        author = data["author"]
+    else :
+        print "Setting default value for author : My author"
+        author = "My author"
+
+    if debug : print "Setting author to " + author
+    file_string = (re.sub(u'!author!', author, file_string))
+
+    # Getting author company
+    if "author_company" in data :
+        author_company = data["author_company"]
+    else :
+        print "Setting default value for author_company : My company"
+        author = "My company"
+
+    if debug : print "Setting author_company to " + author_company
+    file_string = (re.sub(u'!author_company!', author_company, file_string))
+
+    # Getting language
+    if "lang" in data :
+        langLong = data["lang"]
+    else :
+        print "Setting default language for lang : english"
+        langLong = "english"
+
+    if langLong not in ["french", "english"] :
+        print "Unknown language : " + langLong
+        print "Falling back to default one : english"
+        langLong = "english"
+
+    if langLong == "english" :
+        lang = "en"
+        file_string = (re.sub(u'!french-addon!',r"", file_string))
+    if langLong == "french" :
+        lang = "fr"
+        file_string = (re.sub(u'!french-addon!',r"\\frenchbsetup{CompactItemize=false} % Fix itemize clash", file_string))
+
+    if debug : print "Setting lang to " + lang
+    file_string = (re.sub(u'!lang-short!', lang, file_string))
+    file_string = (re.sub(u'!lang-long!', langLong, file_string))
+
+    # Getting footer
+
+    if "footer" in data :
+        footer = data["footer"]
+
+        # Getting left footer
+        if "left" in footer :
+            leftFooter = footer["left"]
+            elements = ""
+            #elements_count = leftFooter.__len__()
+            for element in leftFooter :
+                #if position != elements_count :
+                elements += element + r"\\\\"
+                #else :
+                #    elements += element
+            file_string = (re.sub(u'!footer_left!', elements, file_string))
+        else :
+            print "No left footer defined"
+
+        # Getting left footer
+        if "right" in footer :
+            rightFooter = footer["right"]
+            elements = ""
+            #elements_count = rightFooter.__len__()
+            for element in rightFooter :
+                #if position != elements_count :
+                elements += element + r"\\\\"
+                #else :
+                #    elements += element
+            file_string = (re.sub(u'!footer_right!', elements, file_string))
+        else :
+            print "No right footer defined"
+    else :
+        print "No footer defined"
+
+    # Getting client
+    if "client" in data :
+        client = data["client"]
+    else :
+        print "Setting default value for client : My client"
+        client = "My client"
+
+    if debug : print "Setting client to " + client
+    file_string = (re.sub(u'!client!', client, file_string))
+
+    # Getting document reference
+    if "destination_file_name" in data :
+        document_reference = data["destination_file_name"]
+    else :
+        print "Setting default value for destination_file_name : example"
+        document_reference = "example"
+
+    document_reference = re.sub(u'_','\\\_',document_reference)
+
+    if debug : print "Setting document_reference to " + document_reference
+    file_string = (re.sub(u'!TPLdocumentreference!', document_reference, file_string))
+
+    # Getting release info
+    if "release_info" in data :
+        release_info = data["release_info"]
+    else :
+        print "Setting default value for release_info : Draft"
+        release_info = "Draft"
+
+    if debug : print "Setting release info to " + release_info
+    file_string = (re.sub(u'!release_info!', release_info, file_string))
+
+    # Getting water_mark
+    if "water_mark" in data :
+        water_mark = data["water_mark"]
+    else :
+        print "Setting default value for water_mark : DRAFT"
+        water_mark = "DRAFT"
+
+    if debug : print "Setting watermark to " + water_mark
+    file_string = (re.sub(u'!water_mark!', water_mark, file_string))
+
+    # Write contents to file.
+    # Using mode 'w' truncates the file.
+    file_handle = codecs.open(template_file_generated, 'w', "utf-8")
+    file_handle.write(file_string)
+    file_handle.close()
+
+else:
+    print "Either file is missing or is not readable"
