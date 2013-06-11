@@ -4,7 +4,7 @@
 	"client":"Client",
 	"title" : "Pretty good document",
 	"author" : "John Doe",
-	"lang":"fr",
+	"lang":"french",
 	"author_company" : "Example inc.",
 	"project_name" : "Projet 999",
 	"writtenby":{

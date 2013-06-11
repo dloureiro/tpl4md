@@ -57,21 +57,21 @@ if path.isfile(template_file_base) and access(template_file_base, R_OK):
 
     # Getting language
     if "lang" in data :
-        lang = data["lang"]
+        langLong = data["lang"]
     else :
-        print "Setting default language for lang : en"
-        lang = "en"
-
-    if lang not in ["fr", "en"] :
-        print "Unknown language : " + lang
-        print "Falling back to default one : en"
-        lang = "en"
-
-    if lang == "en" :
+        print "Setting default language for lang : english"
         langLong = "english"
+
+    if langLong not in ["french", "english"] :
+        print "Unknown language : " + langLong
+        print "Falling back to default one : english"
+        langLong = "english"
+
+    if langLong == "english" :
+        lang = "en"
         file_string = (re.sub(u'!french-addon!',r"", file_string))
-    if lang == "fr" :
-        langLong = "french"
+    if langLong == "french" :
+        lang = "fr"
         file_string = (re.sub(u'!french-addon!',r"\\frenchbsetup{CompactItemize=false} % Fix itemize clash", file_string))
 
     if debug : print "Setting lang to " + lang
