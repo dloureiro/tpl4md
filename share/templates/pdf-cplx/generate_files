@@ -1,0 +1,287 @@
+import re
+import sys
+import json
+import codecs
+from os import path, access, R_OK  # W_OK for write permission.
+
+if len(sys.argv) > 1 :
+    debug = True;
+else :
+    debug = False;
+
+json_data=codecs.open('./configuration.json', "r", "utf-8")
+data = json.load(json_data)
+json_data.close()
+
+template_file_base = "./common/pdf-template-cplx.tex";
+template_file_generated = "./pdf-template-gen.tex";
+
+if debug : print "Base Template file to use : " + template_file_base
+
+if path.isfile(template_file_base) and access(template_file_base, R_OK):
+    #print "File exists and is readable"
+    # Read contents from file as a single string
+    file_handle = codecs.open(template_file_base, 'r', "utf-8")
+    file_string = file_handle.read()
+    file_handle.close()
+
+    # Getting title
+    if "title" in data :
+        title = data["title"]
+    else :
+        print "Setting default value for title : My title"
+        title = "My title"
+
+    if debug : print "Setting title to " + title
+    file_string = (re.sub(u'!title!', title, file_string))
+
+    # Getting author
+    if "author" in data :
+        author = data["author"]
+    else :
+        print "Setting default value for author : My author"
+        author = "My author"
+
+    if debug : print "Setting author to " + author
+    file_string = (re.sub(u'!author!', author, file_string))
+
+    # Getting author company
+    if "author_company" in data :
+        author_company = data["author_company"]
+    else :
+        print "Setting default value for author_company : My company"
+        author = "My company"
+
+    if debug : print "Setting author_company to " + author_company
+    file_string = (re.sub(u'!author_company!', author_company, file_string))
+
+    # Getting language
+    if "lang" in data :
+        lang = data["lang"]
+    else :
+        print "Setting default language for lang : en"
+        lang = "en"
+
+    if lang not in ["fr", "en"] :
+        print "Unknown language : " + lang
+        print "Falling back to default one : en"
+        lang = "en"
+
+    if lang == "en" :
+        langLong = "english"
+        file_string = (re.sub(u'!french-addon!',r"", file_string))
+    if lang == "fr" :
+        langLong = "french"
+        file_string = (re.sub(u'!french-addon!',r"\\frenchbsetup{CompactItemize=false} % Fix itemize clash", file_string))
+
+    if debug : print "Setting lang to " + lang
+    file_string = (re.sub(u'!lang-short!', lang, file_string))
+    file_string = (re.sub(u'!lang-long!', langLong, file_string))
+
+    # Getting footer
+
+    if "footer" in data :
+        footer = data["footer"]
+
+        # Getting left footer
+        if "left" in footer :
+            leftFooter = footer["left"]
+            elements = ""
+            #elements_count = leftFooter.__len__()
+            for element in leftFooter :
+                #if position != elements_count :
+                elements += element + r"\\\\"
+                #else :
+                #    elements += element
+            file_string = (re.sub(u'!footer_left!', elements, file_string))
+        else :
+            print "No left footer defined"
+
+        # Getting left footer
+        if "right" in footer :
+            rightFooter = footer["right"]
+            elements = ""
+            #elements_count = rightFooter.__len__()
+            for element in rightFooter :
+                #if position != elements_count :
+                elements += element + r"\\\\"
+                #else :
+                #    elements += element
+            file_string = (re.sub(u'!footer_right!', elements, file_string))
+        else :
+            print "No right footer defined"
+    else :
+        print "No footer defined"
+
+    # Getting client
+    if "client" in data :
+        client = data["client"]
+
+    else :
+        print "Setting default value for client : My client"
+        client = "My client"
+
+
+    if debug : print "Setting client to " + client
+    file_string = (re.sub(u'!client!', client, file_string))
+
+    # Getting document reference
+    if "destination_file_name" in data :
+        document_reference = data["destination_file_name"]
+    else :
+        print "Setting default value for destination_file_name : example"
+        document_reference = "example"
+
+    document_reference = re.sub(u'_','\\\_',document_reference)
+
+    if debug : print "Setting document_reference to " + document_reference
+    file_string = (re.sub(u'!TPLdocumentreference!', document_reference, file_string))
+
+    # Getting release info
+    if "release_info" in data :
+        release_info = data["release_info"]
+    else :
+        print "Setting default value for release_info : Draft"
+        release_info = "Draft"
+
+    if debug : print "Setting release info to " + release_info
+    file_string = (re.sub(u'!release_info!', release_info, file_string))
+
+    # Getting water_mark
+    if "water_mark" in data :
+        water_mark = data["water_mark"]
+    else :
+        print "Setting default value for water_mark : DRAFT"
+        water_mark = "DRAFT"
+
+    if debug : print "Setting watermark to " + water_mark
+    file_string = (re.sub(u'!water_mark!', water_mark, file_string))
+
+    #specific elements for cplx template
+
+    # Getting project_name
+    if "project_name" in data :
+        project_name = data["project_name"]
+    else :
+        print "Setting default value for project_name : My project"
+        project_name = "My project"
+
+    if debug : print "Setting project_name to " + project_name
+    file_string = (re.sub(u'!project_name!', project_name, file_string))
+
+    ## Constructing the indexation table
+
+    # Getting written by field
+
+    if "writtenby" in data :
+        writtenby = data["writtenby"]
+        if debug : print "Setting writtenby field" + str(writtenby)
+    else :
+        print "No written by value found in configuration file"
+        writtenby = None
+
+    # Getting verified by field
+    if "verifiedby" in data :
+        verifiedby = data["verifiedby"]
+        if debug : print "Setting verifiedby field" + str(verifiedby)
+    else :
+        print "No verified by value found in configuration file"
+        verifiedby = None
+
+    # Getting approved by field
+    if "approvedby" in data :
+        approvedby = data["approvedby"]
+        if debug : print "Setting approvedby field" + str(approvedby)
+    else :
+        print "No approved by value found in configuration file"
+        approvedby = None
+
+    # Generating the indexation table
+    if writtenby != None and verifiedby != None and approvedby != None :
+        indexation_table = r"\\begin{TPLindtable}\n"
+        if writtenby != None : indexation_table += r"\TPLinditem{\writtenby}{" + writtenby["name"] + "}{" + writtenby["date"] + r"}\n"
+        if verifiedby != None : indexation_table += r"\TPLinditem{\\verifiedby}{" + verifiedby["name"] + "}{" + verifiedby["date"] + r"}\n"
+        if approvedby != None : indexation_table += r"\TPLinditem{\\approvedby}{" + approvedby["name"] + "}{" + approvedby["date"] + r"}\n"
+        indexation_table += r"\end{TPLindtable}"
+        file_string = (re.sub(u'!indexation_table!', indexation_table, file_string))
+    else :
+        print "Dropping indexation table"
+        file_string = (re.sub(u'!indexation_table!', "", file_string))
+
+    ## Constructing the rev history table
+
+    if "revisions" in data :
+        revisions = data["revisions"]
+        if debug : print "Setting revisions to " + str(revisions)
+
+        if len(revisions) > 0 :
+            revhistory_table = r"\\begin{TPLrevtable}\n"
+            for revision in revisions :
+                revision_version = revision["version"]
+                revision_date = revision["date"]
+                revision_description = revision["description"]
+                revision_author = revision["author"]
+                revhistory_table += "\TPLrevitem{"+ revision_version + "}{" + revision_date + "}{" + revision_description + "}{" + revision_author + r"}\n"
+            revhistory_table += "\end{TPLrevtable}"
+            file_string = (re.sub(u'!revhistory_table!', revhistory_table, file_string))
+        else :
+            print r"No revisions found.\nDropping indexation table"
+            file_string = (re.sub(u'!revhistory_table!', "", file_string))
+    else :
+        print r"No revisions found.\nDropping indexation table"
+        file_string = (re.sub(u'!revhistory_table!', "", file_string))
+
+    ## Constructing the reference table
+
+    if "references" in data :
+
+        references = data["references"]
+
+        if debug : print "Setting references to " + str(references)
+
+        if len(references) > 0 :
+            references_table = r"\\begin{TPLreftable}\n"
+            for reference in references :
+                reference_ref = reference["reference"]
+                reference_document_name = reference["document_name"]
+                reference_description = reference["description"]
+                references_table += "\TPLrefitem{"+ reference_ref + "}{" + reference_document_name + "}{" + reference_description + r"}\n"
+            references_table += "\end{TPLreftable}"
+            file_string = (re.sub(u'!references_table!', references_table, file_string) )
+        else :
+            print r"No references found.\nDropping references table"
+            file_string = (re.sub(u'!references_table!', "", file_string) )
+    else :
+        print r"No references found.\nDropping references table"
+        file_string = (re.sub(u'!references_table!', "", file_string) )
+
+    ## Constructing the authorization view table
+
+    if "authorizations" in data :
+        authorizations = data["authorizations"]
+
+        if debug : print "Setting authorization to " + str(authorizations)
+
+        if len(authorizations) > 0 :
+            authorizations_table = r"\\begin{TPLauthviewtable}\n"
+            for authorization in authorizations :
+                authorization_structure = authorization["structure"]
+                authorization_people = authorization["people"]
+                authorizations_table += "\TPLauthviewitem{"+ authorization_structure + "}{" + authorization_people + r"}\n"
+            authorizations_table += "\end{TPLauthviewtable}"
+            file_string = (re.sub(u'!authorizations_table!', authorizations_table, file_string))
+        else :
+            print r"No authorizations found.\nDropping authorizations table"
+            file_string = (re.sub(u'!authorizations_table!', "", file_string))
+    else :
+        print r"No authorizations found.\nDropping authorizations table"
+        file_string = (re.sub(u'!authorizations_table!', "", file_string))
+
+    # Write contents to file.
+    # Using mode 'w' truncates the file.
+    file_handle = codecs.open(template_file_generated, 'w', "utf-8")
+    file_handle.write(file_string)
+    file_handle.close()
+
+else:
+    print "Either file is missing or is not readable"

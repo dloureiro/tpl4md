@@ -1,0 +1,73 @@
+{
+	"source_file_name":"document.md",
+	"destination_file_name":"example",
+	"client":"Client",
+	"title" : "Pretty good document",
+	"author" : "John Doe",
+	"lang":"fr",
+	"author_company" : "Example inc.",
+	"project_name" : "Projet 999",
+	"writtenby":{
+		"name":"J. Doe",
+		"date":"01 avril 2012"
+	},
+	"verifiedby":{
+		"name":"J. Bon",
+		"date":"06 avril 2012"
+	},
+	"approvedby":{
+		"name":"B. Dupont",
+		"date":"08 avril 2012"
+	},
+	"revisions":[
+		{
+			"version":"1",
+			"date":"08/03/2012",
+			"description":"First version",
+			"author":"J. Doe"
+		},
+		{
+			"version":"2",
+			"date":"25/03/2012",
+			"description":"Improvements",
+			"author":"J. Doe, J. Bon"
+		}
+	],
+	"references":[
+		{
+			"reference":"ref1",
+			"document_name":"techDocument1",
+			"description":"Awesome reference"
+		},
+		{
+			"reference":"ref2",
+			"document_name":"techDocument2",
+			"description":"Really awesome reference"
+		}
+	],
+	"authorizations":[
+		{
+			"structure":"Example inc",
+			"people":"All members"
+		},
+		{
+			"structure":"Client",
+			"people":"All members"
+		}
+	],
+	"footer":{
+		"left":[
+			"A marvelous company",
+			"We are a rock-solid team",
+			"located at the edge of the univers"
+		],
+		"right":[
+			"Web : \\url{www.example.com}",
+			"e-mail : \\url{contact@example.com}",
+			"Tel : 01 23 45 67 89"
+		]
+	},
+	"release_info":"Done",
+	"water_mark":"DRAFT",
+	"project_leader":"Me!"
+}

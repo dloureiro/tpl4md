@@ -1,0 +1,128 @@
+\documentclass[10pt]{article}
+
+\IfFileExists{ifxetex.sty}{%
+  \usepackage{ifxetex}%
+}{%
+  \newif\ifxetex
+  \xetexfalse
+}
+  \ifxetex
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+%\setmainfont{DejaVu Serif}
+%\setsansfont{DejaVu Sans}
+%\setmonofont{Bitstream Vera Sans Mono}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\fi
+\usepackage{fancybox}
+\usepackage{makeidx}
+\usepackage{cmap}
+\usepackage{url}
+\usepackage{eurosym}
+\usepackage{graphicx}
+\usepackage{ctable}
+\usepackage[hyperlink]{common/tplformd-cplx}
+\usepackage{color}
+\usepackage{xcolor}
+
+\renewenvironment{quote}{
+  \itshape
+  \color{gray}
+  \list{}{%
+    \leftmargin 0.5in
+    \rightmargin \leftmargin
+  }%
+  \item\relax
+
+}
+{\endlist}
+
+%%%%
+%% TODO:
+%%  - ajouter une macro pour mettre l'objet du document
+%%  - faire les footers avec l'adresse et tels de SysFera
+%%  - enlever un max de paquets docbook
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use the following macros to configure your document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% Change language: fr/en
+%%  - for French: use french in babel, and fr in \setuptplformdlocale
+%%  - for English: use english in babel, and en in \setuptplformdlocale
+
+\usepackage[!lang-long!]{babel}
+\setuptplformdlocale{!lang-short!}
+!french-addon!
+%%%% OPTION
+%% Title and author of the document
+\title{!title!}
+\author{!author!}
+
+%%%% OPTION
+\TPLdocumentreference{!TPLdocumentreference!}
+\TPLprojectname{!project_name!}
+\TPLclient{!client!}
+
+
+\TPLreleaseinfo{!release_info!}
+
+\showwatermark{!water_mark!}
+
+\renewcommand{\TPLindexation}{
+!indexation_table!
+}
+
+\renewcommand{\TPLrevhistory}{
+!revhistory_table!
+}
+
+\renewcommand{\TPLreferenceTable}{
+!references_table!
+}
+\renewcommand{\TPLreferenceTable}{} % disable this table
+
+\renewcommand{\TPLauthview}{
+!authorizations_table!
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           /CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\makeindex
+\makeglossary
+
+\pagestyle{fancy}
+
+\fancyhf{}
+\pagenumbering{roman}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO,RE]{\textsl{\DBKtitle}}
+\fancyhead[CO,CE]{\textbf{\DBKreleaseinfo}}
+\fancyfoot[CO,CE]{\TPLthisdocument}
+\fancyfoot[LO,RE] {\vspace{-0,3cm}\footnotesize{\bf{!author_company!}}\\\footnotesize{!footer_left!}}
+\fancyfoot[RO,LE] {\vspace{-0,3cm}\footnotesize{!footer_right!}}
+\begin{document}
+\frontmatter % do not disable, this is used for page numbering
+\maketitle % do not disable, otherwise you won't have any title
+
+\tableofcontents % comment to disable the table of contents
+\pagenumbering{arabic}
+\mainmatter % do not disable, this is used for page numbering
+\fancyhead[LE,RO]{\textbf{\color{black}\thepage/\textcolor{black}{\pageref{LastPage}}}}
+\fancyhead[LO,RE]{\textsl{\DBKtitle}}
+\fancyhead[CO,CE]{\textbf{\DBKreleaseinfo}}
+\fancyfoot[CO,CE]{\TPLthisdocument}
+\fancyfoot[LO,RE] {\vspace{-0,3cm}\footnotesize{\bf{!author_company!}}\\\footnotesize{!footer_left!}}
+\fancyfoot[RO,LE] {\vspace{-0,3cm}\footnotesize{!footer_right!}}  % Book contents
+
+  $body$
+
+\end{document}
