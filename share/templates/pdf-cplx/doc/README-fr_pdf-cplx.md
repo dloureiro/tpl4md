@@ -2,17 +2,20 @@
 
 ## Introduction
 
-Cette documentation est en lien avec le template pour la création de pdf complexes pour le programme `marksf_gen`
+Cette documentation est en lien avec le template pour la création de pdf complexes pour le programme `tpl4md`
 
 ## Structure du template
 
     root
 	|- Makefile
+	|- generate_files
 	|- configuration.json
 	|- dblatex
 	|- doc
 	|  |- README_pdf-cplx.md
 	|  |- README_pdf-cplx.pdf
+	|  |- README-fr_pdf-cplx.md
+	|  |- README-fr_pdf-cplx.pdf
 	|- document.md
 	|- generator.py
 	|- images
@@ -20,23 +23,47 @@ Cette documentation est en lien avec le template pour la création de pdf comple
 	|- make-clean.bat
 	|- make-pdf-cplx.bat
 	|- pdf-template-cplx.tex
-	|- sysfera-cplx.sty
+	|- tplformd-cplx.sty
 
 ## Description de ce contenu
 
- **Fichier**                      **Description**
-------------------------------   ----------------------------------------------------------------
-  Makefile                        Makefile pour la génération/clean du pdf complexe d'output
-  doc/README_pdf-cplx.(md/pdf)    Ce fichier de readme
-  dblatex                         Feuilles de style nécessaire pour la compilation du template complexe
-  configuration.json              Fichier de configuration pour le fichier pdf final
-  generator.py                    Fichier permettant la génération du projet basé sur le template
-  document.md                     Le document de base d'exemple pour ce template
-  images/*                        Un ensemble d'images de base
-  make-clean.bat                  Fichier batch à utiliser sous windows pour le nettoyage d'un projet
-  make-pdf-cplx.bat               Fichier batch à utiliser sous windows pour la génération du pdf complexe
-  pdf-template-cplx.tex           Fichier de template utilisé pour la création de l'enrobage du fichier pdf créé
-  sysfera-cplx.sty                Feuille de style définissant le style complexe SysFera
++---------------------------------+---------------------------------------+
+| **Fichier**                     |  **Description**                      |
++=================================+=======================================+
+| Makefile                        | Makefile pour la génération/clean du  |
+|                                 | pdf complexe d'output                 |
++---------------------------------+---------------------------------------+
+| doc/README_pdf-cplx.(md/pdf)    | La traduction de ce fichier de readme |
+|                                 | en anglais                            |
++---------------------------------+---------------------------------------+
+| doc/README-fr_pdf-cplx.(md/pdf) | Ce fichier de readme                  |
++---------------------------------+---------------------------------------+
+| dblatex                         | Feuilles de style nécessaire pour la  |
+|                                 | compilation du template complexe      |
++---------------------------------+---------------------------------------+
+| configuration.json              | Fichier de configuration pour le      |
+|                                 | fichier pdf final                     |
++---------------------------------+---------------------------------------+
+| generator.py                    | Fichier permettant la génération du   |
+|                                 | projet basé sur le template           |
++---------------------------------+---------------------------------------+
+| document.md                     | Le document de base d'exemple pour ce |
+|                                 | template                              |
++---------------------------------+---------------------------------------+
+| images/*                        | Un ensemble d'images de base          |
++---------------------------------+---------------------------------------+
+| make-clean.bat                  | Fichier batch à utiliser sous windows |
+|                                 | pour le nettoyage d'un projet         |
++---------------------------------+---------------------------------------+
+| make-pdf-cplx.bat               | Fichier batch à utiliser sous windows |
+|                                 | pour la génération du pdf complexe    |
++---------------------------------+---------------------------------------+
+| pdf-template-cplx.tex           | Fichier de template utilisé pour la   |
+|                                 | création de l'enrobage du fichier pdf |
++---------------------------------+---------------------------------------+
+| tplformd-cplx.sty               | Feuille de style définissant le style |
+|                                 | complexe SysFera                      |
++---------------------------------+---------------------------------------+
 
 Nous allons aborder les fichiers les plus importants.
 
@@ -49,7 +76,7 @@ Fichier de compilation permettant la gestion de la compilation d'un document com
 
 ## pdf-template-cplx.tex
 
-Ce fichier LaTeX décrit l'ensemble des éléments qui forment le template qui permet la création des fichiers complexes en pdf au style SysFera avec notamment l'ensemble des éléments de préambule, de vérification, de relecture, les en-têtes et pieds de pages, le background, etc.
+Ce fichier LaTeX décrit l'ensemble des éléments qui forment le template qui permet la création des fichiers complexes en pdf avec notamment l'ensemble des éléments de préambule, de vérification, de relecture, les en-têtes et pieds de pages, etc.
 
 Ce fichier possède des balises de la forme :
 
@@ -73,75 +100,75 @@ Ce fichier est celui qui défini les éléments suivant :
 \author{John Doe}
 ~~~
        
- * Le nom de projet avec la balise `\SFprojectname`. Ex : 
+ * Le nom de projet avec la balise `\TPLprojectname`. Ex : 
 
 ~~~latex
-\SFprojectname{Projet 9999}
+\TPLrojectname{Projet 9999}
 ~~~
  
- * Le client avec la balise `\SFclient`. Ex :
+ * Le client avec la balise `\TPLclient`. Ex :
  
 ~~~latex
-\SFclient{Client 404}
+\TPLclient{Client 404}
 ~~~
  
  * Une liste de collaborateur qui ont travaillé sur le document avec les différents rôle qu'ils ont pu avoir. Ex :
  
 ~~~latex
-\renewcommand{\SFindexation}{
- \begin{SFindtable}
+\renewcommand{\TPLindexation}{
+ \begin{TPLindtable}
   % le rédacteur, son nom, la date
-  \SFinditem{\writtenby}{J. Doe}{01 avril 2012}
+  \TPLinditem{\writtenby}{J. Doe}{01 avril 2012}
   % le relecteur, son nom, la date
-  \SFinditem{\verifiedby}{J. Bon}{06 avril 2012}
+  \TPLinditem{\verifiedby}{J. Bon}{06 avril 2012}
   % le validateur, son nom, la date
-  \SFinditem{\approvedby}{B. Dupont}{08 avril 2012} 
- \end{SFindtable}
+  \TPLinditem{\approvedby}{B. Dupont}{08 avril 2012} 
+ \end{TPLindtable}
 }
 ~~~
 
  * Une table des révisions du document correspondant. Ex :
  
 ~~~latex
-\renewcommand{\SFrevhistory}{
- \begin{SFrevtable}
+\renewcommand{\TPLrevhistory}{
+ \begin{TPLrevtable}
   % numéro de révision, date, description, auteur
-  \SFrevitem{1}{08/03/2012}{Première version}{J. Doe} 
-  \SFrevitem{2}{25/03/2012}{Améliorations}{J.Doe, J. Bon}
- \end{SFrevtable}
+  \TPLevitem{1}{08/03/2012}{Première version}{J. Doe} 
+  \TPLrevitem{2}{25/03/2012}{Améliorations}{J.Doe, J. Bon}
+ \end{TPLrevtable}
 }
 ~~~
 
  * Une table de documents de référence. Ex :
  
 ~~~latex
-\renewcommand{\SFreferenceTable}{
- \begin{SFreftable}
+\renewcommand{\TPLreferenceTable}{
+ \begin{TPLreftable}
   % référence, nom du document, description du document
-  \SFrefitem{ref1}{techDocument}{Ce document} 
-  \SFrefitem{ref2}{techDocument}{Ce document}
- \end{SFreftable}
+  \TPLrefitem{ref1}{techDocument}{Ce document} 
+  \TPLrefitem{ref2}{techDocument}{Ce document}
+ \end{TPLreftable}
 }
 ~~~
        
  * Une table d'autorisation. Ex :
  
 ~~~latex
-\renewcommand{\SFauthview}{
+\renewcommand{\TPLauthview}{
  \begin{SFauthviewtable}
   % Nom du groupe/entreprise, liste des personnels autorisés
-  \SFauthviewitem{Client 404}{Tous les membres}
-  \SFauthviewitem{SysFera}{Tous les membres de SysFera}
- \end{SFauthviewtable}
+  \TPLauthviewitem{Client 404}{Tous les membres}
+  \TPLauthviewitem{Example sas}{Tous les membres de Example sas}
+ \end{TPLauthviewtable}
 }
 ~~~
 
 D'autres options sont disponibles dans le template comme :
 
- * `\SFreleaseinfo` pour afficher une box en en-tête de page affichant un texte. Ex :
+ * `\TPLreleaseinfo` pour afficher une box en en-tête de page affichant un texte. Ex :
 
 ~~~latex
-\SFreleaseinfo{Réalisé} 
+\TPLreleaseinfo{Réalisé} 
 ~~~
 
  * `\showwatermark` pour avoir un filigrane utilisé sur les pages. Vous pouvez utiliser du texte ou mettre un image en utilisant l'environnement LaTeX adapté. Ex :
@@ -150,16 +177,10 @@ D'autres options sont disponibles dans le template comme :
 \showwatermark{DRAFT} 
 ~~~
  
- * `\SFsetheadlogo` pour avoir un logo dans l'en-tête des pages. Le premier paramètre est la taille de l'image relativement à la dimension `\textwidth`, le second paramètre est le chemin vers l'image à afficher. Ex :
+ * `\TPLprojectleader` pour définir un chef de projet. Ex :
  
 ~~~latex
-\SFsetheadlogo{.25}{common/logosysfera.pdf}
-~~~
- 
- * `\SFprojectleader` pour définir un chef de projet. Ex :
- 
-~~~latex
-\SFprojectleader{Moi}
+\TPLprojectleader{Moi}
 ~~~
 
 *\underline{Note} : Sauf si vous souhaitez modifier le template lui-même, nous n'avez pas à modifier ce fichier lorsque vous souhaitez créer un document.*
@@ -176,70 +197,84 @@ Ce fichier est le document maître dans lequel il faudra ajouter l'ensemble des 
 
 Voici le contenu d'un fichier complet de configuration avec les variables correspondantes pour un pdf complexe :
 
-    {
-	"source_file_name":"document.md", // nom du fichier source
-	"destination_file_name":"example", // nom du fichier de destination
-	"client":"Client", // nom du client
-	"title" : "Document entre SysFera et un client", // titre du document
-	"author" : "John Doe", // auteur du document
-	"project_name" : "Projet 999", // nom du projet
-	"writtenby":{ // personne ayant écrit le document avec la date correspondante
-		"name":"J. Doe",
-		"date":"01 avril 2012"
-	},
-	"verifiedby":{ // personne ayant vérifié le document avec la date correspondante
-		"name":"J. Bon",
-		"date":"06 avril 2012"
-	},
-	"approvedby":{ // personne ayant apprové le document avec la date correspondante
-		"name":"B. Dupont",
-		"date":"08 avril 2012"
-	},
-	"revisions":[ // liste des révisions du document
-		{
-			"version":"1", 
-			"date":"08/03/2012", 
-			"description":"Première version",
-			"author":"J. Doe"
+     {
+		"source_file_name":"document.md", // nom du fichier source
+		"destination_file_name":"example", // nom du fichier de destination
+		"client":"Client", // nom du client
+		"title" : "Pretty good document", // titre du document
+		"author" : "John Doe", // auteur du document
+		"lang":"french", // langue dans laquelle le document est rédigé
+		"author_company" : "Example inc.", // nom de la société de l'auteur
+		"project_name" : "Projet 999", // nom du projet
+		"writtenby":{ // rédacteur du document
+			"name":"J. Doe", // son nom
+			"date":"01 avril 2012" // la date de rédaction
 		},
-		{
-			"version":"2",
-			"date":"25/03/2012",
-			"description":"Amélioration",
-			"author":"J. Doe, J. Bon"
-		}
-	],
-	"references":[ // liste des documents de référence
-		{
-			"reference":"ref1",
-			"document_name":"techDocument1",
-			"description":"Awesome reference"
+		"verifiedby":{ // vérificateur du document
+			"name":"J. Bon", // son nom
+			"date":"06 avril 2012" // la date de vérification
 		},
-		{
-			"reference":"ref2",
-			"document_name":"techDocument2",
-			"description":"Really awesome reference"
-		}
-	],
-	"authorizations":[ // liste des personnes authorisées par structure
-		{
-			"structure":"SysFera",
-			"people":"Tous les membres"
+		"approvedby":{ // la personne ayant approuvé le document
+			"name":"B. Dupont", // son nom
+			"date":"08 avril 2012" // la date
 		},
-		{
-			"structure":"Client",
-			"people":"Tous les membres"
-		}
-	],
-	"release_info":"Réalisé héhé", // information de release du document
-	"water_mark":"DRAFT", // water mark à utiliser sur le document
-	"project_leader":"Me!" // leader du projet
-	}
+		"revisions":[ // la liste des révisions du document
+			{
+				"version":"1", // version
+				"date":"08/03/2012", // date
+				"description":"First version", // description des ajouts de la révision
+				"author":"J. Doe" // son auteur
+			},
+			{
+				"version":"2", // même chose
+				"date":"25/03/2012",
+				"description":"Improvements",
+				"author":"J. Doe, J. Bon"
+			}
+		],
+		"references":[ // liste de références pour ce document
+			{
+				"reference":"ref1", // réference
+				"document_name":"techDocument1", // nom du fichier
+				"description":"Awesome reference" // description de la référence
+			},
+			{
+				"reference":"ref2", // même chose
+				"document_name":"techDocument2",
+				"description":"Really awesome reference"
+			}
+		],
+		"authorizations":[ // list des personnes autorisées à accéder au document
+			{
+				"structure":"Example inc", // expéditeur
+				"people":"All members" // liste des personnes
+			},
+			{
+				"structure":"Client", // même chose chez le destinataire
+				"people":"All members"
+			}
+		],
+		"footer":{ // elements allant apparaître dans le pied de page
+			"left":[ // pied gauche
+				"A marvelous company", // une ligne
+				"We are a rock-solid team", // une autre ligne
+				"located at the edge of the univers"
+			],
+			"right":[ // pied droit
+				"Web : \\url{www.example.com}", // on peut utiliser du latex
+				"e-mail : \\url{contact@example.com}",
+				"Tel : 01 23 45 67 89"
+			]
+		},
+		"release_info":"Draft", // information de release.
+		"water_mark":"DRAFT", // water mark (ex : Draft, confidentiel, etc)
+		"project_leader":"Me!" // project leader
+    }
 
 
 ## generator.py
 
-Ce fichier est utilisé par le script `marksf_gen` pour la copie des fichiers d'un template lors de la création d'un projet basé sur ce template. Il déclare deux variables :
+Ce fichier est utilisé par le script `tpl4md` pour la copie des fichiers d'un template lors de la création d'un projet basé sur ce template. Il déclare deux variables :
 
  * `version` : version du template
  * `description` : description du template
@@ -261,17 +296,19 @@ Voici, après génération, le contenu d'un projet pour un document complexe :
 	|  |- config_parsing
 	|  |- generate_files
 	|- common
-	|  |- bgsysfera.png
-	|  |- logosysfera.pdf
 	|  |- pdf-template-cplx.tex
-	|  |- sysferacplx.sty
+	|  |- tplformd-cplx.sty
 	|  |- dblatex
 	|- configuration.json
 	|- doc
 	|  |- README.md
+	|  |- README-fr.md
 	|  |- README_pdf-cplx.md
 	|  |- README_pdf-cplx.pdf
+	|  |- README-fr_pdf-cplx.md
+	|  |- README-fr_pdf-cplx.pdf
 	|  |- README.pdf
+	|  |- README-fr.pdf
 	|- images
 	|  |- hw.jpg
 	|- document.md
@@ -282,4 +319,4 @@ Voici, après génération, le contenu d'un projet pour un document complexe :
 
 Le readme en pdf est générée avec la commande suivante :
 
-    pandoc -f markdown-raw_tex README_pdf-cplx.md -o README_pdf-cplx.pdf
+    pandoc -f markdown-raw_tex README-fr_pdf-cplx.md -o README-fr_pdf-cplx.pdf
