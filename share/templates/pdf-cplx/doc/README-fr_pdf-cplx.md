@@ -62,7 +62,7 @@ Cette documentation est en lien avec le template pour la création de pdf comple
 |                                 | création de l'enrobage du fichier pdf |
 +---------------------------------+---------------------------------------+
 | tplformd-cplx.sty               | Feuille de style définissant le style |
-|                                 | complexe SysFera                      |
+|                                 | complexe                              |
 +---------------------------------+---------------------------------------+
 
 Nous allons aborder les fichiers les plus importants.
@@ -91,7 +91,7 @@ Ce fichier est celui qui défini les éléments suivant :
  * Le titre avec la balise `\title`. Ex :
  
 ~~~latex
-\title{Exemple de document SysFera}
+\title{Exemple de document}
 ~~~
  
  * L'auteur avec la balise `\author`. Ex :
