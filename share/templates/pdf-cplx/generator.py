@@ -46,10 +46,14 @@ def generate(out_path) :
 	print "-- Adding dblatex"
 	copy(local_path + "/tplformd-cplx.sty", out_common_path )
 	print "-- Complexe tpl4md stylesheet (tplformd-cplx.sty) copied"
+	copy(local_path + "/doc/README-fr_pdf-cplx.md", out_path + "/doc/")
+	print "-- Complex template documentation (README-fr_pdf-cplx.md) copied"
+	copy(local_path + "/doc/README-fr_pdf-cplx.pdf", out_path + "/doc/")
+	print "-- Complex template documentation (README-fr_pdf-cplx.pdf) copied"
 	copy(local_path + "/doc/README_pdf-cplx.md", out_path + "/doc/")
-	print "-- Letter template documentation (README_pdf-cplx.md) copied"
+	print "-- Complex template documentation (README_pdf-cplx.md) copied"
 	copy(local_path + "/doc/README_pdf-cplx.pdf", out_path + "/doc/")
-	print "-- Letter template documentation (README_pdf-cplx.pdf) copied"
+	print "-- Complex template documentation (README_pdf-cplx.pdf) copied"
 
 	print "- Copying image files"
 
