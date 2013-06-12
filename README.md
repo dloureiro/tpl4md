@@ -15,7 +15,7 @@ This `README` file is also available [in french](README-fr.md)
 tpl4md is using different technologies to generate documents:
 
 * [Pandoc](<http://johnmacfarlane.net/pandoc/>) used to convert Markdown documents to various document formats is available on all the major platforms
-* The [LaTeX](http://www.latex-project.org/) document typesetting system. Don't worry, you won't have to write LaTeX code! Well perhaps a little bit … (The following packages are mandatory : `texlive`, `texlive-latex-recommended` et `texlive-latex-extra`)
+* The [LaTeX](http://www.latex-project.org/) document typesetting system. Don't worry, you won't have to write LaTeX code! Well perhaps a little bit … (The following packages are mandatory : `texlive`, `texlive-latex-recommended`, `texlive-xetex`, `ttf-bitstream-vera` et `texlive-latex-extra`)
 * The [Markdown](http://daringfireball.net/projects/markdown/syntax) format for the writing of documents. Some extensions are provided by pandoc to support tables and other cool stuff and you can find the documentation on the [related page](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)
 * The compilation tool : [Make](<http://www.gnu.org/software/make/>)
 * A simple or more advanced editor (providing syntax highlightning) to write markdown ([Mou](http://mouapp.com/) available for the Mac OSX platform is pretty good with a decent WYSIWYG support)
