@@ -15,11 +15,11 @@ Ce fichier `README`est aussi disponible [en anglais](README.md)
 Le projet se sert des différentes technologies suivantes:
 
 * Le logiciel [Pandoc](<http://johnmacfarlane.net/pandoc/>) disponible sur la plupart des plate-formes existantes  
-* Le système d'écriture de documents [LaTeX](http://www.latex-project.org/). Ne vous inquiétez pas, nous n'écrirez pas de LaTeX! Enfin un tout petit peu peut-être (les paquets `texlive`, `texlive-latex-recommended` et `texlive-latex-extra` sont suffisant)
+* Le système d'écriture de documents [LaTeX](http://www.latex-project.org/). Ne vous inquiétez pas, nous n'écrirez pas de LaTeX! Enfin un tout petit peu peut-être (les paquets `texlive`, `texlive-latex-recommended`, `texlive-xetex`, `ttf-bitstream-vera` et `texlive-latex-extra` sont suffisant)
 * Le format [Markdown](http://daringfireball.net/projects/markdown/syntax) pour l'écriture du document avec les extensions fournies par Pandoc dont on peut trouver la description sur [la page dédiée](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)
 * L'outil de compilation [Make](<http://www.gnu.org/software/make/>)
 * Un éditeur de texte pour taper le markdown (sur Mac OSX il y a [Mou](http://mouapp.com/) qui n'est pas trop mal car il propose un peu de WYSIWYG)
-* Une version récente de Python pour les scripts de configuration et de génération de template
+* Une version récente de Python pour les scripts de configuration et de génération de template avec `python-tk` activé
 
 ## Windows
 
