@@ -19,7 +19,7 @@ tpl4md is using different technologies to generate documents:
 * The [Markdown](http://daringfireball.net/projects/markdown/syntax) format for the writing of documents. Some extensions are provided by pandoc to support tables and other cool stuff and you can find the documentation on the [related page](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)
 * The compilation tool : [Make](<http://www.gnu.org/software/make/>)
 * A simple or more advanced editor (providing syntax highlightning) to write markdown ([Mou](http://mouapp.com/) available for the Mac OSX platform is pretty good with a decent WYSIWYG support)
-* A recent version of the Python framework (v2.7 is ok)
+* A recent version of the Python framework (v2.7 is ok) with `python-tk` available
 
 ## Windows
 
