@@ -14,7 +14,7 @@ This `README` file is also available [in french](README-fr.md)
 
 tpl4md is using different technologies to generate documents:
 
-* [Pandoc](<http://johnmacfarlane.net/pandoc/>) used to convert Markdown documents to various document formats is available on all the major platforms
+* [Pandoc](<http://johnmacfarlane.net/pandoc/>) used to convert Markdown documents to various document formats is available on all the major platforms. The pandoc version must be greater than 1.9.4.2 or the latest available.
 * The [LaTeX](http://www.latex-project.org/) document typesetting system. Don't worry, you won't have to write LaTeX code! Well perhaps a little bit … (The following packages are mandatory : `texlive`, `texlive-latex-recommended`, `texlive-xetex`, `ttf-bitstream-vera` and `texlive-latex-extra`)
 * The [Markdown](http://daringfireball.net/projects/markdown/syntax) format for the writing of documents. Some extensions are provided by pandoc to support tables and other cool stuff and you can find the documentation on the [related page](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)
 * The compilation tool : [Make](<http://www.gnu.org/software/make/>)
@@ -23,7 +23,7 @@ tpl4md is using different technologies to generate documents:
 
 ## Windows
 
-* [Pandoc](<http://johnmacfarlane.net/pandoc/>) used to convert Markdown documents to various document formats is available on all the major platforms
+* [Pandoc](<http://johnmacfarlane.net/pandoc/>) used to convert Markdown documents to various document formats is available on all the major platforms. The pandoc version must be greater than 1.9.4.2 or the latest available.
  * The [LaTeX](http://www.latex-project.org/) document typesetting system. Don't worry, you won't have to write LaTeX code! Well perhaps a little bit … On windows platforms my preffered one is the TeXLive (worked for me at least) or the MikTeX distribution John Mac Farlane is  (le créateur de Pandoc) sur son site.
  * Une version récente de Python (celle de la communauté ou celle d'ActiveState)
  * Le format [Markdown](http://daringfireball.net/projects/markdown/syntax) pour l'écriture du document avec les extensions fournies par Pandoc dont on peut trouver la description sur [la page dédiée](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)

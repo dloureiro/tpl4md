@@ -14,7 +14,7 @@ Ce fichier `README`est aussi disponible [en anglais](README.md)
 
 Le projet se sert des différentes technologies suivantes:
 
-* Le logiciel [Pandoc](<http://johnmacfarlane.net/pandoc/>) disponible sur la plupart des plate-formes existantes  
+* Le logiciel [Pandoc](<http://johnmacfarlane.net/pandoc/>) disponible sur la plupart des plate-formes existantes. La version minimum nécessaire est la 1.9.4.2.
 * Le système d'écriture de documents [LaTeX](http://www.latex-project.org/). Ne vous inquiétez pas, nous n'écrirez pas de LaTeX! Enfin un tout petit peu peut-être (les paquets `texlive`, `texlive-latex-recommended`, `texlive-xetex`, `ttf-bitstream-vera` et `texlive-latex-extra` sont suffisant)
 * Le format [Markdown](http://daringfireball.net/projects/markdown/syntax) pour l'écriture du document avec les extensions fournies par Pandoc dont on peut trouver la description sur [la page dédiée](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)
 * L'outil de compilation [Make](<http://www.gnu.org/software/make/>)
@@ -23,7 +23,7 @@ Le projet se sert des différentes technologies suivantes:
 
 ## Windows
 
- * Le logiciel [Pandoc](<http://johnmacfarlane.net/pandoc/>) disponible sur la plupart des plate-formes existantes
+ * Le logiciel [Pandoc](<http://johnmacfarlane.net/pandoc/>) disponible sur la plupart des plate-formes existantes. La version minimum nécessaire est la 1.9.4.2.
  * Le système d'écriture de documents [LaTeX](http://www.latex-project.org/) avec les packages docbook pour les parties de template et les polices DejaVu. Ne vous inquiétez pas, nous n'écrirez pas de LaTeX! Enfin un tout petit peu peut-être. Sous Windows je conseille TexLive (l'essai a été concluant) ou alors MikTeX qui est la distribution conseillée par John Mac Farlane (le créateur de Pandoc) sur son site.
  * Une version récente de Python (celle de la communauté ou celle d'ActiveState)
  * Le format [Markdown](http://daringfireball.net/projects/markdown/syntax) pour l'écriture du document avec les extensions fournies par Pandoc dont on peut trouver la description sur [la page dédiée](http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown)
