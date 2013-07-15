@@ -229,7 +229,5 @@ def main(template_type,project_dir) :
     template_generator.usage_message()
 
 if __name__ == "__main__":
-    #main()
     parseOptions()
-    #getAvailableTemplates()
 
